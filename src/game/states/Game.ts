@@ -1,13 +1,43 @@
-declare var Phaser: any;
-
-// var MrHop = MrHop || {};
-// import { MrHop } from '../main';
+import Phaser from 'phaser'
 
 import { Platform } from '../prefabs/Platform';
 
-export const GameState = {
+export class GameState extends Phaser.State {
+  // Objects Pools
+  floorPool: Phaser.Group;
+  platformPool: Phaser.Group;
+  coinsPool: Phaser.Group;
 
-  init: function() {
+  // Game stats
+  maxJumpDistance: number;
+  myCoins: number;
+  levelSpeed: number;
+  highScore: number;
+
+  // Inputs
+  cursors: any;
+
+  // Game objects
+  background: Phaser.TileSprite;
+  player: Phaser.Sprite;
+  currentPlatform: Platform;
+  coinSound: Phaser.Audio;
+  water: Phaser.Sprite;
+  coinsCountLabel: Phaser.Text;
+
+  // Jumping
+  startJumpY: number;
+  isJumping: boolean;
+  jumpPeaked: boolean;
+  isFalling: boolean;
+  hasDoubleJumped: boolean;
+
+  // Game Over
+  overlay: Phaser.BitmapData;
+  panel: Phaser.Sprite;
+  
+
+  init() {
     
     //pool of floors
     this.floorPool = this.add.group();
@@ -33,8 +63,9 @@ export const GameState = {
 
     // Level Speed
     this.levelSpeed = 200;
-  },
-  create: function() {
+  }
+
+  create() {
     // Create moving background
     this.background = this.add.tileSprite(0, 0, this.game.world.width, this.game.world.height, 'background');
     this.background.tileScale.y = 2;
@@ -69,8 +100,9 @@ export const GameState = {
     // Show number of coins
     var textStyle = { font: '30px Arial', fill: 'white' };
     this.coinsCountLabel = this.add.text(10, 20, '0', textStyle);
-  },   
-  update: function() {    
+  }
+
+  update() {    
     if(this.player.alive){
       // PlatformPool is a group of groups, we need to iterate through 'em
       this.platformPool.forEachAlive(function(platform, index){
@@ -118,8 +150,9 @@ export const GameState = {
       }  
     }
     
-  },
-  playerJump: function(){
+  }
+
+  playerJump(){
     if(this.player.body.touching.down || (this.isFalling && !this.hasDoubleJumped)){
       // Starting point of the jump
       this.startJumpY = this.player.y;
@@ -147,12 +180,14 @@ export const GameState = {
     }else if(!this.isJumping){
       this.isFalling = true;
     }
-  },
-  loadLevel: function(){
+  }
+
+  loadLevel(){
 
     this.createPlatform();
-  },
-  createPlatform: function(){
+  }
+
+  createPlatform(){
     var nextPlatformData = this.generateRandomPlatform();
 
     if(nextPlatformData){
@@ -169,8 +204,9 @@ export const GameState = {
 
       this.platformPool.add(this.currentPlatform);
     }
-  },
-  generateRandomPlatform: function(){
+  }
+
+  generateRandomPlatform(){
     var data: any = {};
 
     // Distance from previous platform
@@ -188,8 +224,9 @@ export const GameState = {
     data.numTiles = (maxTiles-minTiles) * Math.random() + minTiles;
 
     return data;
-  },
-  collectCoin: function(player, coin){
+  }
+
+  collectCoin(player, coin){
     coin.kill();
 
     this.myCoins++;
@@ -199,8 +236,9 @@ export const GameState = {
     this.coinSound.play();
 
     this.updateLevelSpeed();
-  },
-  gameOver: function(){
+  }
+
+  gameOver(){
     this.player.kill();
 
     this.updateHighscore();
@@ -243,15 +281,17 @@ export const GameState = {
     }, this);
 
     gameOverPanelAnim.start();
-  },
-  restart: function(){
+  }
+
+  restart(){
     // Bug with tileSprite on v2.3, have to remove sprites before restart
     this.game.world.remove(this.background);
     this.game.world.remove(this.water);
 
     this.game.state.start('Game');
-  },
-  updateHighscore: function(){
+  }
+
+  updateHighscore(){
     this.highScore = +localStorage.getItem('MrHop::highScore');
 
     // Do we have a new highScore ?
@@ -259,16 +299,18 @@ export const GameState = {
       this.highScore = this.myCoins;
 
       // Save new highScore
-      localStorage.setItem('MrHop::highScore', this.highScore);
+      localStorage.setItem('MrHop::highScore', this.highScore.toString());
     }
-  },
-  updateLevelSpeed: function(){
+  }
+
+  updateLevelSpeed(){
     this.levelSpeed += 10;
 
     this.background.autoScroll(-this.levelSpeed / 7, 0);
     this.water.autoScroll(-this.levelSpeed * 1.2, 0);
   }
-  // render: function(){
+
+  // render(){
   //   this.game.debug.body(this.player);
   //   this.game.debug.bodyInfo(this.player, 0, 30);
   // }

@@ -1,19 +1,11 @@
+/**
+ *  Needed to use Phaser through webpack compilation
+ *  Don't remove
+ */
 import 'pixi'
 import 'p2'
 import Phaser from 'phaser'
-
-export var MrHop = MrHop || {};
-
-// get game dimensions based on world maxWidth & height
-// MrHop.dim = MrHop.getGameLandscapeDimensions(700, 350);
-
-// MrHop.game = new Phaser.Game(MrHop.dim.w, MrHop.dim.h, Phaser.CANVAS);
-
-// MrHop.game.state.add('Boot', MrHop.BootState);
-// MrHop.game.state.add('Preload', MrHop.PreloadState);
-// MrHop.game.state.add('Game', MrHop.GameState);
-
-// MrHop.game.state.start('Boot');
+/** End webpack required expressions */
 
 import { BootState } from './states/Boot';
 import { PreloadState } from './states/Preload';
@@ -21,18 +13,30 @@ import { GameState } from './states/Game';
 
 import { getGameLandscapeDimensions } from './scaler';
 
-MrHop.BootState = BootState;
-MrHop.PreloadState = PreloadState;
-MrHop.GameState = GameState;
-MrHop.getGameLandscapeDimensions = getGameLandscapeDimensions;
 
-MrHop.start = function(elId){
-	MrHop.dim = MrHop.getGameLandscapeDimensions(700, 350);
-	MrHop.game = new Phaser.Game(/*MrHop.dim.w, MrHop.dim.h, */ 640, 480, Phaser.CANVAS, elId);
+export module MrHop {
 
-	MrHop.game.state.add('Boot', MrHop.BootState);
-	MrHop.game.state.add('Preload', MrHop.PreloadState);
-	MrHop.game.state.add('Game', MrHop.GameState);
+	export class Game extends Phaser.Game {
+		private dim: { w: number, h: number };
 
-	MrHop.game.state.start('Boot');
+		constructor(elId: string) {
+			// get game dimensions based on world maxWidth & height
+			let dim = getGameLandscapeDimensions(700, 350);
+
+			// Create Phaser Game instance
+			super(dim.w, dim.h, Phaser.CANVAS, elId);
+
+			this.dim = dim;
+
+			// Define game states
+			this.state.add('Boot', BootState);
+			this.state.add('Preload', PreloadState);
+			this.state.add('Game', GameState);
+
+			// Start
+			this.state.start('Boot');
+		}
+
+	}
+	
 }

@@ -1,8 +1,5 @@
-// import { MrHop } from './main';
-var MrHop = MrHop || {};
-
 // Calculate dimensions of the game so that 100% of the screen is occupied
-MrHop.getGameLandscapeDimensions = function(max_w, max_h){
+export const getGameLandscapeDimensions = function(max_w, max_h){
 	// Get both w and h of the screen (they might exchange)
 	var w = window.innerWidth * window.devicePixelRatio;
 	var h = window.innerHeight * window.devicePixelRatio;
@@ -30,5 +27,3 @@ MrHop.getGameLandscapeDimensions = function(max_w, max_h){
 		h: landH
 	}
 }
-
-export const getGameLandscapeDimensions = MrHop.getGameLandscapeDimensions;

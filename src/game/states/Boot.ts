@@ -1,10 +1,8 @@
 declare var Phaser: any;
 
-// var MrHop = MrHop || {};
-
 //setting game configuration and loading the assets for the loading screen
-export const BootState = {
-  init: function() {
+export class BootState extends Phaser.State {
+  init(){
     //loading screen will have a white background
     this.game.stage.backgroundColor = '#fff';  
     
@@ -16,13 +14,15 @@ export const BootState = {
     this.scale.pageAlignVertically = true;
 
     //physics system
-    this.game.physics.startSystem(Phaser.Physics.ARCADE);    
-  },
-  preload: function() {
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);  
+  }
+
+  preload(){
     //assets we'll use in the loading screen
     this.load.image('preloadbar', 'assets/images/preloader-bar.png');
-  },
-  create: function() {
+  }
+
+  create(){
     this.state.start('Preload');
   }
-};
+}

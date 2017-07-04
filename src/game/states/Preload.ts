@@ -1,8 +1,10 @@
-// var MrHop = MrHop || {};
+import Phaser from 'phaser'
 
 //loading the game assets
-export const PreloadState = {
-  preload: function() {
+export class PreloadState extends Phaser.State {
+  preloadBar: Phaser.Sprite;
+  
+  preload() {
     //show loading screen
     this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'preloadbar');
     this.preloadBar.anchor.setTo(0.5);
@@ -18,8 +20,9 @@ export const PreloadState = {
     this.load.image('background', 'assets/images/background.png');
     this.load.spritesheet('player', 'assets/images/player_spritesheet.png', 51, 67, 5, 2, 3);
     this.load.audio('coin', ['assets/audio/coin.mp3', 'assets/audio/coin.ogg']);
-  },
-  create: function() {
+  }
+
+  create() {
     this.state.start('Game');
   }
-};
+}

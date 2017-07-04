@@ -11,12 +11,13 @@ export class GameScreen {
 	MrHop: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  	this.MrHop = MrHop;
+  	
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GameScreen');
-    this.MrHop.start('game-screen');
+
+    this.MrHop = new MrHop.Game('game-screen');
   }
 
 }
