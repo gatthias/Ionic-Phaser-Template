@@ -195,7 +195,7 @@ Alrighty ! From now, our project should compile and load Phaser at runtime witho
 If you came from an existing Phaser project using JS, there's still a little work to do, as you'll need to either add .js files compilation in Webpack config or change your .js extensions to .ts. And of course some adjustments will probably be needed in the existing code, but it will probably stick to minor changes. You can then progressively turn your code to full Typescript (not required but strongly recommended at least if it is still a wip).
 
 
-For the rest of your game code, you can rely on Phaser usage with Typescript information, it should now work seamelessly.
+For the rest of your game code, you can rely on Phaser usage with Typescript information, it should now work seamlessly.
 
 ## Known Issues
 
