@@ -22,9 +22,11 @@ If you prefer to reproduce this on an existing project, you can either start fro
 
 ### Installation
 
-Fairly straightforward, just :
+Fairly straightforward, just clone this repo :
 
-```git clone GIT_REPO```
+```git clone https://github.com/opulisDynamics/Ionic-Phaser-Template.git```
+or
+```git clone git@github.com:opulisDynamics/Ionic-Phaser-Template.git```
 
 and don't forget to do a little ```npm install``` right after.
 
