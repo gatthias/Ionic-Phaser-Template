@@ -11,22 +11,17 @@ import { BootState } from './states/Boot';
 import { PreloadState } from './states/Preload';
 import { GameState } from './states/Game';
 
-import { getGameLandscapeDimensions } from './scaler';
 
-
-export module MrHop {
+export module MyGame {
 
 	export class Game extends Phaser.Game {
+		public state: Phaser.State;
+
 		private dim: { w: number, h: number };
 
 		constructor(elId: string) {
-			// get game dimensions based on world maxWidth & height
-			let dim = getGameLandscapeDimensions(700, 350);
-
 			// Create Phaser Game instance
-			super(dim.w, dim.h, Phaser.CANVAS, elId);
-
-			this.dim = dim;
+			super(640, 480, Phaser.CANVAS, elId);
 
 			// Define game states
 			this.state.add('Boot', BootState);
@@ -38,5 +33,5 @@ export module MrHop {
 		}
 
 	}
-	
+
 }

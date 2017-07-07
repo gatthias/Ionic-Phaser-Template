@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { MrHop } from '../../game/main';
+import { MyGame } from '../../game/main';
 
 @Component({
   selector: 'page-game-screen',
   templateUrl: 'game-screen.html',
 })
 export class GameScreen {
-	MrHop: any;
+	MyGame: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   	
@@ -17,7 +17,7 @@ export class GameScreen {
   ionViewDidLoad() {
     console.log('ionViewDidLoad GameScreen');
 
-    this.MrHop = new MrHop.Game('game-screen');
+    this.MyGame = new MyGame.Game('game-screen');
   }
 
 }
